@@ -1,0 +1,16 @@
+Link to html Report page:
+http://www.cse.iitb.ac.in/~vamsii/A_2.html
+
+Key Bindings:
+
+1 ->  delete the last control point
+2 ->  draws the bezier curve
+4 ->  opens the door
+5 ->  closes the door
+6 -> toggles between camera mode(default is freeroam where as otherone has lookAt vector targeted towards box)
+7 -> starts the animation
+w,s,a,d -> change the camera view
+e,r->move camera forward or backward in the given direction
+[,]->open or close the box lid
+l,k -> toggles the lights(each one for each light)
+escape key - quits the program.
