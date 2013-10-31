@@ -172,6 +172,7 @@ void display( void )
 	////////////////////////////Dancer 1/////////////////////////////////	
 		glPushMatrix();
 			glTranslatef(0.1,rotate_lid/1250,0);
+			glRotatef(-90,0,1,0);
 			glScalef(0.04,0.04,0.04);
 			glPushMatrix();
 				glTranslatef(0,-0.17,0);
@@ -184,7 +185,7 @@ void display( void )
 
 	/////////////////////left leg///////////////////////
 
-			glPushMatrix();
+				glPushMatrix();
 				glTranslatef(0.065,-0.07,0);
 				glRotatef(hip_x_l,1,0,0);
 				glRotatef(hip_z_l,0,0,1);
@@ -234,9 +235,9 @@ void display( void )
 					glPopMatrix();
 				glPopMatrix();
 
-			glPopMatrix();
+				glPopMatrix();
 	//////////////////////////right leg///////////////////
-			glPushMatrix();
+				glPushMatrix();
 				glTranslatef(-0.065,-0.07,0);
 				glRotatef(hip_x_r,1,0,0);
 				glRotatef(-hip_z_r,0,0,1);
@@ -286,8 +287,8 @@ void display( void )
 					glPopMatrix();
 				glPopMatrix();
 
+				glPopMatrix();
 			glPopMatrix();
-		glPopMatrix();
 ////////////////////////Torso1////////////////////////////////	
 		glPushMatrix();
 			glTranslatef(0,-0.08,0);
@@ -422,18 +423,20 @@ void display( void )
 						glPopMatrix();
 					glPopMatrix();
 				glPopMatrix();	
-			glPopMatrix();
+		glPopMatrix();
 	glPopMatrix();
 ////////////////////////////////////////////////////
 ////////////////////////////Dancer 2/////////////////////////////////	
 	glPushMatrix();
-		glTranslatef(0.14,rotate_lid/1250,0);
-		glScalef(0.04,0.04,0.04);	
+		glTranslatef(0.107,rotate_lid/1250 - 0.005,0);
+		glRotatef(90,0,1,0);
+		glRotatef(15,1,0,0);
+		glScalef(0.04,0.035,0.04);	
 		glPushMatrix();
 			glTranslatef(0,-0.17,0);
-			glRotatef(t3_x,1,0,0);
-			glRotatef(t3_z,0,0,1);
-			glRotatef(t3_y,0,1,0);
+			glRotatef(t3_x1,1,0,0);
+			glRotatef(t3_z1,0,0,1);
+			glRotatef(t3_y1,0,1,0);
 			glPushMatrix();
 				glCallList(torso3);
 			glPopMatrix();
@@ -442,9 +445,9 @@ void display( void )
 
 			glPushMatrix();
 				glTranslatef(0.065,-0.07,0);
-				glRotatef(hip_x_l,1,0,0);
-				glRotatef(hip_z_l,0,0,1);
-				glRotatef(hip_y_l,0,1,0);
+				glRotatef(hip_x_l1,1,0,0);
+				glRotatef(hip_z_l1,0,0,1);
+				glRotatef(hip_y_l1,0,1,0);
 
 				glPushMatrix();
 					glScalef(0.35,0.35,0.35);
@@ -459,7 +462,7 @@ void display( void )
 
 				glPushMatrix();
 					glTranslatef(0.002,-0.34,0);
-					glRotatef(knee_x_l,1,0,0);
+					glRotatef(knee_x_l1,1,0,0);
 
 				 	glPushMatrix();
 						glScalef(0.2,0.2,0.2);
@@ -474,9 +477,9 @@ void display( void )
 
 					glPushMatrix();
 						glTranslatef(0,-0.26,0);
-						glRotatef(ankle_x_l,1,0,0);
-						glRotatef(ankle_z_l,0,0,1);
-						glRotatef(ankle_y_l,0,1,0);
+						glRotatef(ankle_x_l1,1,0,0);
+						glRotatef(ankle_z_l1,0,0,1);
+						glRotatef(ankle_y_l1,0,1,0);
 						
 						glPushMatrix();
 							glScalef(0.15,0.15,0.15);
@@ -494,9 +497,9 @@ void display( void )
 //////////////////////////right leg///////////////////
 		glPushMatrix();
 			glTranslatef(-0.065,-0.07,0);
-			glRotatef(hip_x_r,1,0,0);
-			glRotatef(-hip_z_r,0,0,1);
-			glRotatef(hip_y_r,0,1,0);
+			glRotatef(hip_x_r1,1,0,0);
+			glRotatef(-hip_z_r1,0,0,1);
+			glRotatef(hip_y_r1,0,1,0);
 			
 			glPushMatrix();
 				glScalef(0.35,0.35,0.35);
@@ -511,7 +514,7 @@ void display( void )
 
 			glPushMatrix();
 				glTranslatef(-0.002,-0.34,0);
-			 	glRotatef(knee_x_r,1,0,0);
+			 	glRotatef(knee_x_r1,1,0,0);
 
 			 	glPushMatrix();
 					glScalef(0.2,0.2,0.2);
@@ -526,9 +529,9 @@ void display( void )
 
 				glPushMatrix();
 					glTranslatef(0,-0.26,0);
-					glRotatef(ankle_x_r,1,0,0);
-					glRotatef(ankle_z_r,0,0,1);
-					glRotatef(ankle_y_r,0,1,0);
+					glRotatef(ankle_x_r1,1,0,0);
+					glRotatef(ankle_z_r1,0,0,1);
+					glRotatef(ankle_y_r1,0,1,0);
 
 					glPushMatrix();
 						glScalef(0.15,0.15,0.15);
@@ -547,9 +550,9 @@ void display( void )
 ////////////////////////Torso1////////////////////////////////	
 		glPushMatrix();
 			glTranslatef(0,-0.08,0);
-			glRotatef(t1_x,1,0,0);
-			glRotatef(t1_z,0,0,1);
-			glRotatef(t1_y,0,1,0);
+			glRotatef(t1_x1,1,0,0);
+			glRotatef(t1_z1,0,0,1);
+			glRotatef(t1_y1,0,1,0);
 			
 			glPushMatrix();	
 				glScalef(1.2,0.6,0.25);
@@ -564,9 +567,9 @@ void display( void )
 ////////////////////////head///////////////////////////////////
 			glPushMatrix();
 				glTranslatef(0,0.435,0);
-				glRotatef(neck_x,1,0,0);
-				glRotatef(neck_z,1,0,1);
-				glRotatef(neck_y,0,1,0);
+				glRotatef(neck_x1,1,0,0);
+				glRotatef(neck_z1,1,0,1);
+				glRotatef(neck_y1,0,1,0);
 
 					glPushMatrix();	
 						glRotatef(90,1,0,0);
@@ -581,11 +584,11 @@ void display( void )
 	///////////////////////////////////////////////////////////
 	/////////////////left hand///////////////////////	
 
-				glPushMatrix();
+			glPushMatrix();
 					glTranslatef(0.19,0.34,0);
-					glRotatef(shldr_x_l,1,0,0);
-					glRotatef(shldr_z_l,0,0,1);
-					glRotatef(shldr_y_l,0,1,0);
+					glRotatef(shldr_x_l1,1,0,0);
+					glRotatef(shldr_z_l1,0,0,1);
+					glRotatef(shldr_y_l1,0,1,0);
 					glPushMatrix();
 						glScalef(0.4,0.4,0.5);
 						glCallList(shoulder);
@@ -599,7 +602,7 @@ void display( void )
 					
 					glPushMatrix();
 						glTranslatef(0,-0.285,0);
-						glRotatef(elb_x_l,1,0,0);
+						glRotatef(elb_x_l1,1,0,0);
 						glPushMatrix();
 							glScalef(0.18,0.18,0.18);
 							glCallList(elbow);
@@ -613,9 +616,9 @@ void display( void )
 
 						glPushMatrix();
 							glTranslatef(0,-0.265,0);
-							glRotatef(wrst_x_l,1,0,0);
-							glRotatef(wrst_z_l,0,0,1);
-							glRotatef(wrst_y_l,0,1,0);
+							glRotatef(wrst_x_l1,1,0,0);
+							glRotatef(wrst_z_l1,0,0,1);
+							glRotatef(wrst_y_l1,0,1,0);
 
 							glPushMatrix();
 								glScalef(0.16,0.16,0.16);
@@ -628,13 +631,13 @@ void display( void )
 							glPopMatrix();
 						glPopMatrix();
 					glPopMatrix();
-				glPopMatrix();
+			glPopMatrix();
 	//////////////////right hand///////////////////
-				glPushMatrix();
+			glPushMatrix();
 					glTranslatef(-0.19,0.34,0);
-					glRotatef(shldr_x_r,1,0,0);
-					glRotatef(-shldr_z_r,0,0,1);
-					glRotatef(shldr_y_r,0,1,0);
+					glRotatef(shldr_x_r1,1,0,0);
+					glRotatef(-shldr_z_r1,0,0,1);
+					glRotatef(shldr_y_r1,0,1,0);
 					glPushMatrix();
 						glScalef(0.4,0.4,0.5);
 						glCallList(shoulder);
@@ -648,7 +651,7 @@ void display( void )
 					
 					glPushMatrix();
 						glTranslatef(0,-0.285,0);
-						glRotatef(elb_x_r,1,0,0);
+						glRotatef(elb_x_r1,1,0,0);
 						glPushMatrix();
 							glScalef(0.18,0.18,0.18);
 							glCallList(elbow);
@@ -662,9 +665,9 @@ void display( void )
 
 						glPushMatrix();
 							glTranslatef(0,-0.265,0);
-							glRotatef(wrst_x_r,1,0,0);
-							glRotatef(wrst_z_r,0,0,1);
-							glRotatef(wrst_y_r,0,1,0);
+							glRotatef(wrst_x_r1,1,0,0);
+							glRotatef(wrst_z_r1,0,0,1);
+							glRotatef(wrst_y_r1,0,1,0);
 
 							glPushMatrix();
 								glScalef(0.16,0.16,0.16);
@@ -677,7 +680,7 @@ void display( void )
 							glPopMatrix();
 						glPopMatrix();
 					glPopMatrix();
-				glPopMatrix();	
+			glPopMatrix();	
 		glPopMatrix();
 		glPopMatrix();
 ////////////////////////////////////////////////////		
@@ -918,7 +921,18 @@ void keyboard( unsigned char key, int x, int y ) {
 		glDisable(GL_LIGHT1);
 	}
 	break;		
-	
+  case 'R':
+  	if(en_l3 == 0)
+	{
+		en_l3 = 1;
+		glEnable(GL_LIGHT2);
+	}
+	else
+	{
+		en_l3 = 0;
+		glDisable(GL_LIGHT2);
+	}
+	break;	
   case '6':
   	cur_axis = 1;//x axis
   	break;

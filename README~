@@ -10,8 +10,7 @@ Key Bindings:
 6 -> toggles between camera mode(default is freeroam where as otherone has lookAt vector targeted towards box)
 7 -> starts the animation
 w,s,a,d -> change the camera view
-W,S->move camera forward or backward in the given direction
+e,r->move camera forward or backward in the given direction
 [,]->open or close the box lid
-e,r -> toggles the lights(each one for each light)
-	
+l,k -> toggles the lights(each one for each light)
 escape key - quits the program.

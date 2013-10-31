@@ -42,7 +42,7 @@ void room()
 	glBindTexture(GL_TEXTURE_2D, texture1);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, white);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, white);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, white);
+	//glMaterialfv(GL_FRONT, GL_SPECULAR, white);
 	glMaterialfv(GL_FRONT, GL_SHININESS, shininess);
 	//right wall - inside
 	glBegin(GL_POLYGON);
