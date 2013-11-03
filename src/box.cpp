@@ -92,6 +92,10 @@ void box()
 	glEnd();
 	glEndList();
 
+	rot_floor = glGenLists(1);
+	glNewList(rot_floor, GL_COMPILE);
+	drawBox(0.2,GL_QUADS);
+	glEndList();
 	// Lid 
 	l = glGenLists(1);
 	glNewList(l,GL_COMPILE);

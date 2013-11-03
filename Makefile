@@ -11,7 +11,7 @@ PROJECT_DIR=./
 TEXTURE_DIR=$(PROJECT_DIR)/textures 
 SRC_DIR=$(PROJECT_DIR)/src
 #Libraries
-LIBS = -lglut -lGLU -lGL -lsfml-audio -lsfml-system
+LIBS = -lglut -lGLU -lGL #-lsfml-audio -lsfml-system
 
 SRC := $(wildcard $(SRC_DIR)/*.cpp)
 

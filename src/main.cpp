@@ -151,7 +151,7 @@ void display( void )
 		glPopMatrix();
 		glTranslatef(-0.25,-0.02,0.3);
 
-	////////////////////////////BOX////////////////////////////
+	////////////////////////////////////////////////////////
 		glPushMatrix();
 			glTranslatef(0.3,0,0);
 			glScalef(0.2,0.2,0.2);
@@ -165,14 +165,21 @@ void display( void )
 		    glPushMatrix();
 		    	glTranslatef(0,rotate_lid/250,0);
 		    	glCallList(base);
+		    	glPushMatrix();
+		    		glTranslatef(0,-0.18,0);
+		    		glRotatef(rotate_flr,0,1,0);
+		    		glScalef(1,0.1,1);
+		    		glCallList(rot_floor);
+		    	glPopMatrix();
 		    	glBindTexture(GL_TEXTURE_2D, 0);
 		    glPopMatrix();
 		glPopMatrix();
 	//////////////////////////////////////////////////////////////
 	////////////////////////////Dancer 1/////////////////////////////////	
 		glPushMatrix();
-			glTranslatef(0.1,rotate_lid/1250,0);
+			glTranslatef(0.1,(rotate_lid + 3)/1250,0);
 			glRotatef(-90,0,1,0);
+			glRotatef(rotate_flr,0,1,0);
 			glScalef(0.04,0.04,0.04);
 			glPushMatrix();
 				glTranslatef(0,-0.17,0);
@@ -428,8 +435,9 @@ void display( void )
 ////////////////////////////////////////////////////
 ////////////////////////////Dancer 2/////////////////////////////////	
 	glPushMatrix();
-		glTranslatef(0.107,rotate_lid/1250 - 0.005,0);
+		glTranslatef(0.107,(rotate_lid + 5)/1250 - 0.005,0);
 		glRotatef(90,0,1,0);
+		glRotatef(rotate_flr,0,1,0);
 		glRotatef(15,1,0,0);
 		glScalef(0.04,0.035,0.04);	
 		glPushMatrix();
@@ -857,6 +865,12 @@ void keyboard( unsigned char key, int x, int y ) {
   	else
   		anim_cam = 0;
   	break;	 
+  case 'n':
+  	rotate_flr += 5;
+  	break;
+  case 'm':
+  	rotate_flr -= 5;
+  	break;	
   case 'q':
   	animate(0);
   	break;
