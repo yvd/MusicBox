@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <cmath>
 #include <fstream>
+#include "vector"
 //#include <SFML/Audio.hpp>
 #include "global.h"
 #include "drawbox.cpp"
@@ -20,6 +21,11 @@ float angle = 0.0;
 int flag_draw = 0;
 int flag_pnt = 0;
 int anim_cam = 0;
+int frm = 1;
+int lfrm = 1;
+int cur_kfrm = 1,cur_ifrm=1;
+int a_1,a_2;
+double a_3,a_4;
 static void init()
 {
 	glShadeModel(GL_SMOOTH);
@@ -39,6 +45,56 @@ static void init()
 	glCallList(sun);
 }
 
+void loadkeyframe(int n)
+{
+	std::string f;
+	f = "keyframes.txt";
+	std::ifstream input_file;
+//	std::cout<<"here\n";
+	input_file.open(f.c_str());
+	while(input_file.good())
+	{
+		//std::cout<<"here1\n";
+		std::string str, par;
+		int fnum,psn,i;
+		std::vector<std::string> parse;
+		getline(input_file,str);
+		
+		if(str.length() < 2)
+		{
+			break;
+		}
+		while((psn = str.find(" ")) != std::string::npos)
+		{
+			par = str.substr(0,psn);
+			parse.push_back(par);
+			str = str.substr(psn+1);
+		//	std::cout<<"here3\n";
+		}
+		//std::cout<<"here4\n";
+		if(n == atoi(parse[0].c_str()))
+		{
+			a_1 = atoi(parse[1].c_str());
+			//std::cout<<"en_l1\n";
+			a_2 = atoi(parse[2].c_str());
+			//std::cout<<"en_l2\n";
+			a_3 = atof(parse[3].c_str());
+			//std::cout<<"rotate_lid\n";
+			a_4 = atof(parse[4].c_str());
+			//std::cout<<"rotate_flr\n";
+			break;
+		}
+	}
+	input_file.close();
+}
+
+void loadframe(int a,int b,double c,double d)
+{
+	en_l1 = a;
+	en_l2 = b;
+	rotate_lid = c;
+	rotate_flr = d;
+}
 void saveframe() 
 {
     std::string f; 
@@ -47,12 +103,12 @@ void saveframe()
     f = "keyframes.txt";
     std::ofstream output_file;
     output_file.open(f.c_str(),std::fstream::app|std::fstream::out);
-    //WallLight LampLight boxlid door  rotate_flr  ex ey ez theta phi
-    output_file<<"K "<<en_l1<<" "<<en_l2<<" "<<rotate_lid<<" "<<rotate_door<<" "<<rotate_flr<<ex<<" "<<ey<<" "<<ez<<" "<<theta<<" "<<phi;
+    //WallLight LampLight boxlid rotate_flr
+    output_file<<frm<<" "<<en_l1<<" "<<en_l2<<" "<<rotate_lid<<" "<<rotate_flr;
     // output_file<<C.getr()<<" "<<C.getg()<<" "<<C.getb()<<" "<<ln.getsize()<<" "<<ln.getp1().getx()<<" "<<ln.getp1().gety()<<" "<<ln.getp2().getx()<<" "<<ln.getp2().gety()<<" \n";
     // output_file<<C.getr()<<" "<<C.getg()<<" "<<C.getb();
-     
-    output_file<<"\n";
+    frm++; 
+    output_file<<" E\n";
 	output_file.close();
  }
 
@@ -73,6 +129,43 @@ void animate(int value)
 
 	}
 }
+
+void box_animate(int k)
+{	
+	if(cur_ifrm <= 30)
+	{
+		
+		int c1,c2;
+		double c3,c4;
+		loadkeyframe(cur_kfrm + 1);
+		c1 = a_1;
+		c2 = a_2;
+		c3 = a_3;
+		c4 = a_4;
+		loadkeyframe(cur_kfrm);
+		//c1 = (c1 - a_1)/30;
+		//c2 = (c2 - a_2)/30;
+		c3 = (c3 - a_3)/30;
+		c4 = (c4 - a_4)/30;
+		loadframe(a_1,a_2,a_3 + cur_ifrm*c3,a_4 + cur_ifrm*c4);
+		glutPostRedisplay();
+		cur_ifrm++;
+		glutTimerFunc(60,box_animate,cur_ifrm);
+		std::cout<<"cur_kfrm is: "<<cur_kfrm<<" and k is: "<<cur_ifrm<<" \n";
+	}
+	else if(cur_kfrm < 10)
+	{
+		//std::cout<<"cur_kfrm is: "<<cur_kfrm<<"\n";
+		cur_kfrm++;
+		cur_ifrm = 0;
+		glutTimerFunc(60,box_animate,cur_ifrm);
+	}
+	else
+	{
+		return;
+	}
+}
+
 void mouseclick(int x, int y)
 {
     GLint viewport[4];
@@ -839,8 +932,24 @@ void keyboard( unsigned char key, int x, int y ) {
   case 27: 
     exit(0);
     break;
+  case '-':
+  	lfrm--;
+  	std::cout<<"lfrm is: "<<lfrm<<"\n";
+  	break;
+  case '+':
+  	lfrm++;
+  	std::cout<<"lfrm is: "<<lfrm<<"\n";
+  	break;	
   case 'x':
   	saveframe();  
+  	break;
+  case 'z':
+  	box_animate(cur_ifrm);
+  	break;
+  case 'c':
+  	cur_ifrm = 1;
+  	cur_kfrm = 1;
+  	break;
   case '1':
   	b.del_lastCP();
   	break;
