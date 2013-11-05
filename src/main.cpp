@@ -866,10 +866,12 @@ void keyboard( unsigned char key, int x, int y ) {
   		anim_cam = 0;
   	break;	 
   case 'n':
-  	rotate_flr += 5;
+	if(rotate_flr < 25)
+	  	rotate_flr += 5;
   	break;
   case 'm':
-  	rotate_flr -= 5;
+	if(rotate_flr > -25)
+	  	rotate_flr -= 5;
   	break;	
   case 'q':
   	animate(0);
