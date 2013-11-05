@@ -47,8 +47,8 @@ void saveframe()
     f = "keyframes.txt";
     std::ofstream output_file;
     output_file.open(f.c_str(),std::fstream::app|std::fstream::out);
-    //WallLight LampLight boxlid door
-    output_file<<"K "<<en_l1<<" "<<en_l2<<" "<<rotate_lid<<" "<<rotate_door;
+    //WallLight LampLight boxlid door  rotate_flr  ex ey ez theta phi
+    output_file<<"K "<<en_l1<<" "<<en_l2<<" "<<rotate_lid<<" "<<rotate_door<<" "<<rotate_flr<<ex<<" "<<ey<<" "<<ez<<" "<<theta<<" "<<phi;
     // output_file<<C.getr()<<" "<<C.getg()<<" "<<C.getb()<<" "<<ln.getsize()<<" "<<ln.getp1().getx()<<" "<<ln.getp1().gety()<<" "<<ln.getp2().getx()<<" "<<ln.getp2().gety()<<" \n";
     // output_file<<C.getr()<<" "<<C.getg()<<" "<<C.getb();
      
@@ -958,24 +958,6 @@ void keyboard( unsigned char key, int x, int y ) {
   case '8':
   	cur_axis = 3;//z axis
   	break;
-  case '9':
-  	if(side == 1)
-  		side = 0;// left side
-  	else
-  		side = 1;//right side
-  	break;
-  case '0':
-	if(limb == 1)
-  		limb = 0;//hands
-  	else
-  		limb = 1;//legs
-  	break;
-  case '-':
-  	if(torso == 1)
-  		torso = 0;//torso1
-  	else
-  		torso = 1;//torso2
-  	break;
   case 't':
   	if(cur_axis ==1)
   	{
@@ -1022,482 +1004,53 @@ void keyboard( unsigned char key, int x, int y ) {
   		}
   	}
   	break;  	
-  case 'o':
-  	if(torso == 0)
-  	{
-  		if(cur_axis == 1)
-  		{
-  			if(t1_x < 40)
-  			{
-  				t1_x += 5;
-  			}
-  		}
-  		else if(cur_axis == 2)
-  		{
-  			if(t1_y < 40)
-  			{
-  				t1_y += 5;
-  			}
-  		}
-  		else
-  		{	
-  			if(t1_z < 20)
-  			{
-  				t1_z += 5;
-  			}
-  		}
-  	}
-  	else
-  	{
-  		if(cur_axis == 1)
-  		{
-  			if(t3_x < 25)
-  			{
-  				t3_x += 5;
-  			}
-  		}
-  		else if(cur_axis == 2)
-  		{
-  			if(t3_y < 40)
-  			{
-  				t3_y += 5;
-  			}
-  		}
-  		else
-  		{
-  			if(t3_z < 15)
-  			{
-  				t3_z += 5;
-  			}	
-  		}
-  	}
-  	break;
-  case 'p':
-  	if(torso == 0)
-  	{
-  		if(cur_axis == 1)
-  		{
-  			if(t1_x > -45)
-  			{
-  				t1_x -= 5;
-  			}
-  		}
-  		else if(cur_axis == 2)
-  		{
-  			if(t1_y > -40)
-  			{
-  				t1_y -= 5;
-  			}
-  		}
-  		else
-  		{	
-  			if(t1_z > -20)
-  			{
-  				t1_z -= 5;
-  			}
-  		}
-  	}
-  	else
-  	{
-  		if(cur_axis == 1)
-  		{
-  			if(t3_x > -25)
-  			{
-  				t3_x -= 5;
-  			}
-  		}
-  		else if(cur_axis == 2)
-  		{
-  			if(t3_y > -40)
-  			{
-  				t3_y -= 5;
-  			}
-  		}
-  		else
-  		{
-  			if(t3_z > -15)
-  			{
-  				t3_z -= 5;
-  			}	
-  		}
-  	}
-  	break;
   case 'u':
-  	if(limb == 0)
+  	if(cur_axis ==1)
   	{
-	  	if(side == 0)
-	  	{
-		  	if(cur_axis == 1)
-			{
-				if(shldr_x_l < 225)
-		  			shldr_x_l += 5;
-		  	}
-		  	else if(cur_axis == 2)
-		  	{
-		  		if(shldr_y_l < 180)
-		  		shldr_y_l += 5;
-		  	}
-		  	else if(cur_axis == 3)
-		  	{
-		  		if(shldr_z_l < 180)
-		  		shldr_z_l += 5;
-		  	}
-		}
-		else
-		{
-			if(cur_axis == 1)
-			{
-				if(shldr_x_r < 225)
-		  			shldr_x_r += 5;
-		  	}
-		  	else if(cur_axis == 2)
-		  	{
-		  		if(shldr_y_r < 180)
-		  		shldr_y_r += 5;
-		  	}
-		  	else if(cur_axis == 3)
-		  	{
-		  		if(shldr_z_r < 180)
-		  		shldr_z_r += 5;
-		  	}
-		}
-	}
-	else 
-	{
-		if(side == 0)
-	  	{
-		  	if(cur_axis == 1)
-			{
-				if(hip_x_l < 110)
-		  			hip_x_l += 5;
-		  	}
-		  	else if(cur_axis == 2)
-		  	{
-		  		if(hip_y_l < 90)
-		  			hip_y_l += 5;
-		  	}
-		  	else if(cur_axis == 3)
-		  	{
-		  		if(hip_z_l < 75)
-		  			hip_z_l += 5;
-		  	}
-		}
-		else
-		{
-			if(cur_axis == 1)
-			{
-				if(hip_x_r < 110)
-		  			hip_x_r += 5;
-		  	}
-		  	else if(cur_axis == 2)
-		  	{
-		  		if(hip_y_r < 90)
-		  			hip_y_r += 5;
-		  	}
-		  	else if(cur_axis == 3)
-		  	{
-		  		if(hip_z_r < 75)
-		  			hip_z_r += 5;
-		  	}
-		}
-	}
+  		if(neck_x1 < 20)
+  		{
+  			neck_x1 += 5;
+  		}
+  	}
+  	else if(cur_axis ==2)
+  	{
+  		if(neck_y1 < 90)
+  		{
+  			neck_y1 += 5;
+  		}
+  	}
+  	else
+  	{
+  		if(neck_z1 < 20)
+  		{
+  			neck_z1 += 5;
+  		}
+  	}
   	break;
   case 'i':
-    if(limb == 0)
-    {
-		if(side == 0)
-	    {
-	    	if(cur_axis == 1)
-			{
-				if(shldr_x_l > -75)
-		  			shldr_x_l -= 5;
-		  	}
-		  	else if(cur_axis == 2)
-		  	{
-		  		if(shldr_y_l > 0)
-		  		shldr_y_l -= 5;
-		  	}
-		  	else if(cur_axis == 3)
-		  	{
-		  		if(shldr_z_l > 0)
-		  		shldr_z_l -= 5;
-		  	}
-	    }
-	    else
-	    {
-	    	if(cur_axis == 1)
-			{
-				if(shldr_x_r > -75)
-		  			shldr_x_r -= 5;
-		  	}
-		  	else if(cur_axis == 2)
-		  	{
-		  		if(shldr_y_r > 0)
-		  		shldr_y_r -= 5;
-		  	}
-		  	else if(cur_axis == 3)
-		  	{
-		  		if(shldr_z_r > 0)
-		  		shldr_z_r -= 5;
-		  	}
-	    }
-	}  
-	else
-	{
-		if(side == 0)
-	    {
-	    	if(cur_axis == 1)
-			{
-				if(hip_x_l > -75)
-		  			hip_x_l -= 5;
-		  	}
-		  	else if(cur_axis == 2)
-		  	{
-		  		if(hip_y_l > -90)
-		  			hip_y_l -= 5;
-		  	}
-		  	else if(cur_axis == 3)
-		  	{
-		  		if(hip_z_l > 0)
-		  			hip_z_l -= 5;
-		  	}
-	    }
-	    else
-	    {
-	    	if(cur_axis == 1)
-			{
-				if(hip_x_r > -75)
-		  			hip_x_r -= 5;
-		  	}
-		  	else if(cur_axis == 2)
-		  	{
-		  		if(hip_y_r > -90)
-		  			hip_y_r -= 5;
-		  	}
-		  	else if(cur_axis == 3)
-		  	{
-		  		if(hip_z_r > 0)
-		  			hip_z_r -= 5;
-		  	}
-	    }
-	}  
-    break;
-  case 'f':
-    if(limb == 0)
-    {
-	  	if(side == 0)
-		{
-			if(elb_x_l < 165)
-		  		elb_x_l += 5;
-		}
-		else
-		{
-			if(elb_x_r < 165)
-				elb_x_r += 5;
-		}
-	}
-	else
-	{
-		if(side == 0)
-		{
-			if(knee_x_l < 0)
-		  		knee_x_l += 5;
-		}
-		else
-		{
-			if(knee_x_r < 0)
-				knee_x_r += 5;
-		}
-	}
+  	if(cur_axis ==1)
+  	{
+  		if(neck_x1 > -20)
+  		{
+  			neck_x1 -=5;
+  		}
+  	}
+  	else if(cur_axis ==2)
+  	{
+  		if(neck_y1 > -90)
+  		{
+  			neck_y1 -= 5;
+  		}
+  	}
+  	else
+  	{
+  		if(neck_z1 > -20)
+  		{
+  			neck_z1 -= 5;
+  		}
+  	}
   	break;
-  case 'g':
-  	if(limb == 0)
-  	{
-	  	if(side == 0)
-		{
-			if(elb_x_l > 0)
-		  		elb_x_l -= 5;
-		}
-		else
-		{
-			if(elb_x_r > 0)
-				elb_x_r -= 5;
-		}
-	}
-	else
-	{
-		if(side == 0)
-		{
-			if(knee_x_l > -150)
-		  		knee_x_l -= 5;
-		}
-		else
-		{
-			if(knee_x_r > -150)
-				knee_x_r -= 5;
-		}
-	}
-  	break;	
-  case 'h':
-  	if(limb == 0)
-  	{
-	  	if(side == 0)
-	  	{
-	  		if(cur_axis == 1)
-	  		{
-	  			if(wrst_x_l < 30)
-	  				wrst_x_l += 5;
-	  		}
-	  		else if(cur_axis == 2)
-	  		{
-	  			if(wrst_y_l < 180)
-	  				wrst_y_l += 5;
-	  		}
-	  		else if(cur_axis == 3)
-	  		{
-	  			if(wrst_x_l < 90)
-	  				wrst_x_l += 5;
-	  		}
-	  	}
-	  	else
-	  	{
-	  		if(cur_axis == 1)
-	  		{
-	  			if(wrst_x_r < 30)
-	  				wrst_x_r += 5;
-	  		}
-	  		else if(cur_axis == 2)
-	  		{
-	  			if(wrst_y_r < 180)
-	  				wrst_y_r += 5;
-	  		}
-	  		else if(cur_axis == 3)
-	  		{
-	  			if(wrst_x_r < 90)
-	  				wrst_x_r += 5;
-	  		}
-	  	}
-	}
-	else 
-	{
-		if(side == 0)
-	  	{
-	  		if(cur_axis == 1)
-	  		{
-	  			if(ankle_x_l < 30)
-	  				ankle_x_l += 5;
-	  		}
-	  		else if(cur_axis == 2)
-	  		{
-	  			if(ankle_y_l < 10)
-	  				ankle_y_l += 5;
-	  		}
-	  		else if(cur_axis == 3)
-	  		{
-	  			if(ankle_x_l < 90)
-	  				ankle_x_l += 5;
-	  		}
-	  	}
-	  	else
-	  	{
-	  		if(cur_axis == 1)
-	  		{
-	  			if(ankle_x_r < 30)
-	  				ankle_x_r += 5;
-	  		}
-	  		else if(cur_axis == 2)
-	  		{
-	  			if(ankle_y_r < 10)
-	  				ankle_y_r += 5;
-	  		}
-	  		else if(cur_axis == 3)
-	  		{
-	  			if(ankle_x_r < 90)
-	  				ankle_x_r += 5;
-	  		}
-	  	}
-	}
-  	break;
-  	case 'j':
-  	if(limb == 0)
-  	{
-	  	if(side == 0)
-	  	{
-	  		if(cur_axis == 1)
-	  		{
-	  			if(wrst_x_l > -30)
-	  				wrst_x_l -= 5;
-	  		}
-	  		else if(cur_axis == 2)
-	  		{
-	  			if(wrst_y_l > -10)
-	  				wrst_y_l -= 5;
-	  		}
-	  		else if(cur_axis == 3)
-	  		{
-	  			if(wrst_z_l > -90)
-	  				wrst_z_l -= 5;
-	  		}
-	  	}
-	  	else
-	  	{
-	  		if(cur_axis == 1)
-	  		{
-	  			if(wrst_x_r > -30)
-	  				wrst_x_r -= 5;
-	  		}
-	  		else if(cur_axis == 2)
-	  		{
-	  			if(wrst_y_r > -10)
-	  				wrst_y_r -= 5;
-	  		}
-	  		else if(cur_axis == 3)
-	  		{
-	  			if(wrst_z_r > -90)
-	  				wrst_z_r -= 5;
-	  		}
-	  	}
-	}
-	else
-	{
-		if(side == 0)
-	  	{
-	  		if(cur_axis == 1)
-	  		{
-	  			if(ankle_x_l > -30)
-	  				ankle_x_l -= 5;
-	  		}
-	  		else if(cur_axis == 2)
-	  		{
-	  			if(ankle_y_l > -18)
-	  				ankle_y_l -= 5;
-	  		}
-	  		else if(cur_axis == 3)
-	  		{
-	  			if(ankle_z_l > -90)
-	  				ankle_z_l -= 5;
-	  		}
-	  	}
-	  	else
-	  	{
-	  		if(cur_axis == 1)
-	  		{
-	  			if(ankle_x_r > -30)
-	  				ankle_x_r -= 5;
-	  		}
-	  		else if(cur_axis == 2)
-	  		{
-	  			if(ankle_y_r > -10)
-	  				ankle_y_r -= 5;
-	  		}
-	  		else if(cur_axis == 3)
-	  		{
-	  			if(ankle_z_r > -90)
-	  				ankle_z_r -= 5;
-	  		}
-	  	}
-	}
-  	break;	
+  	
   default:
     break;
   }

@@ -49,7 +49,7 @@ GLUquadric *q;
 int head,neck,torso1,torso2,torso3,hip,thigh,knee,leg,ankle,foot,shoulder,uarm,elbow,larm,wrist,hand;
 //Textures used.
 GLuint texture1,texture2,texture3,texture4,texture5,texture6,texture7,texture8,texture9,b_front,r1,r2,r3,r4,r5,f_w1,f_w2,f_w3,pt;
-GLdouble ex=0.05,ey=1.34,ez=-0.95,ux=0,uy=1,uz=0;
+GLdouble ex=0.05,ey=1.38,ez=-1.39,ux=0,uy=1,uz=0;
 char a1[] = "./textures/bfront.bmp";
 char a2[] = "./textures/bfront2.bmp";	
 char c1[] = "./textures/r_cube/r1.bmp";
