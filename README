@@ -1,17 +1,32 @@
 Link to html Report page:
-http://www.cse.iitb.ac.in/~vamsii/A_3.html
+http://www.cse.iitb.ac.in/~vamsii/A_23.html
+
+Youtube Link: 
+http://youtu.be/TYwXoKf8Ovo
 
 Key Bindings:
-
-1 ->  delete the last control point
-2 ->  draws the bezier curve
-4 ->  opens the door
-5 ->  closes the door
-6 -> toggles between camera mode(default is freeroam where as otherone has lookAt vector targeted towards box)
-7 -> starts the animation
+x 				-> 	save frame to keybindings.txt
+z 				-> 	start the animation of the music box
+q 				-> 	starts bezier curve aniamtion
+c 				-> 	resets the animation flags
+C(shift + c)	-> 	toggles between record mode
+n,m 			-> 	rotates the floor on which the dancers stand
+1 				->  delete the last control point
+2 				->  draws the bezier curve
+A 				->  adds a prefixed point to the bezier curve and sets certain theta and phi values
+4 				->  opens the door
+5 				->  closes the door
+6,7,8 			-> 	x,y,z axis selection
+t,y 			->  moves the neck of dancer 1
+u,i 			-> 	moves the neck of dancer 2
+f,g 			-> 	moves the torso of dancer 1
+h,j				->	moves the torso of dancer 2
+k,l    			-> 	moves the leg of dancer 1(only in x)
+v,b 			->  moves the leg of dancer 2(only in x)
+M(shift + m)	-> 	moves the camera infront of the music box
 w,s,a,d -> change the camera view
 W,S->move camera forward or backward in the given direction
 [,]->open or close the box lid
-e,r -> toggles the lights(each one for each light)
+e,r,R -> toggles the lights(each one for each light)
 	
 escape key - quits the program.

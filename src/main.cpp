@@ -22,11 +22,11 @@ int flag_draw = 0;
 int flag_pnt = 0;
 int anim_cam = 0;
 int frm = 1;
-int lfrm = 1;
+//int lfrm = 1; 
 int cur_kfrm = 1,cur_ifrm=1;
 int a_1,a_2;
 int record = 0;
-double a_3,a_4,a_5,a_6;
+double a_3,a_4,a_5,a_6,a_7,a_8,a_9,a_10;
 unsigned char *pRGB;
 unsigned int framenum=0;
 static void init()
@@ -111,6 +111,10 @@ void loadkeyframe(int n)
 			a_4 = atof(parse[4].c_str());
 			a_5 = atof(parse[5].c_str());
 			a_6 = atof(parse[6].c_str());
+			a_7 = atof(parse[7].c_str());
+			a_8 = atof(parse[8].c_str()); 
+			a_9 = atof(parse[9].c_str());
+			a_10 = atof(parse[10].c_str());
 			//std::cout<<"rotate_flr\n";
 			break;
 		}
@@ -118,14 +122,34 @@ void loadkeyframe(int n)
 	input_file.close();
 }
 
-void loadframe(int a,int b,double c,double d,double e,double f)
+void loadframe(int a,int b,double c,double d,double e,double f,double g,double h,double i,double j)
 {
 	en_l1 = a;
 	en_l2 = b;
+	if(en_l1 == 1)
+	{
+		glEnable(GL_LIGHT0);
+	}
+	else
+	{
+		glDisable(GL_LIGHT0);
+	}
+  	if(en_l2 == 1)
+	{
+		glEnable(GL_LIGHT1);
+	}
+	else
+	{
+		glDisable(GL_LIGHT1);
+	}
 	rotate_lid = c;
 	rotate_flr = d;
 	neck_x = e;
 	neck_x1 = f;
+	t1_x  =   g;
+	t1_x1 =   h;
+	hip_x_l = i;
+	hip_x_r1 = j;
 }
 void saveframe() 
 {
@@ -135,9 +159,9 @@ void saveframe()
     f = "keyframes.txt";
     std::ofstream output_file;
     output_file.open(f.c_str(),std::fstream::app|std::fstream::out);
-    //WallLight LampLight boxlid rotate_flr neckpos1 neckpos2
+    //WallLight LampLight boxlid rotate_flr neckpos1 neckpos2 torsopos1 torsopos2
     output_file<<frm<<" "<<en_l1<<" "<<en_l2<<" "<<rotate_lid<<" "<<rotate_flr;
-    output_file<<" "<<neck_x<<" "<<neck_x1;
+    output_file<<" "<<neck_x<<" "<<neck_x1<<" "<<t1_x<<" "<<t1_x1<<" "<<hip_x_l<<" "<<hip_x_r1;
     // output_file<<C.getr()<<" "<<C.getg()<<" "<<C.getb()<<" "<<ln.getsize()<<" "<<ln.getp1().getx()<<" "<<ln.getp1().gety()<<" "<<ln.getp2().getx()<<" "<<ln.getp2().gety()<<" \n";
     // output_file<<C.getr()<<" "<<C.getg()<<" "<<C.getb();
     frm++; 
@@ -177,7 +201,7 @@ void box_animate(int k)
 	{
 		
 		int c1,c2;
-		double c3,c4,c5,c6;
+		double c3,c4,c5,c6,c7,c8,c9,c10;
 		loadkeyframe(cur_kfrm + 1);
 		c1 = a_1;
 		c2 = a_2;
@@ -185,25 +209,31 @@ void box_animate(int k)
 		c4 = a_4;
 		c5 = a_5;
 		c6 = a_6;
+		c7 = a_7;
+		c8 = a_8;
+		c9 = a_9;
+		c10 = a_10;
 		loadkeyframe(cur_kfrm);
-		//c1 = (c1 - a_1)/30;
-		//c2 = (c2 - a_2)/30;
 		c3 = (c3 - a_3)/30;
 		c4 = (c4 - a_4)/30;
 		c5 = (c5 - a_5)/30;
 		c6 = (c6 - a_6)/30;
-		loadframe(a_1,a_2,a_3 + cur_ifrm*c3,a_4 + cur_ifrm*c4,a_5 + cur_ifrm*c5,a_6 + cur_ifrm*c6);
+		c7 = (c7 - a_7)/30;
+		c8 = (c8 - a_8)/30;
+		c9 = (c9 - a_9)/30;
+		c10 = (c10 - a_10)/30;
+		loadframe(a_1,a_2,a_3 + cur_ifrm*c3,a_4 + cur_ifrm*c4,a_5 + cur_ifrm*c5,a_6 + cur_ifrm*c6,a_7 + cur_ifrm*c7,a_8 + cur_ifrm*c8,a_9 + cur_ifrm*c9,a_10 + cur_ifrm*c10);
 		glutPostRedisplay();
 		cur_ifrm++;
-		glutTimerFunc(20,box_animate,cur_ifrm);
+		glutTimerFunc(10,box_animate,cur_ifrm);
 		//std::cout<<"cur_kfrm is: "<<cur_kfrm<<" and k is: "<<cur_ifrm<<" \n";
 	}
-	else if(cur_kfrm < 16)
+	else if(cur_kfrm < 17)
 	{
 		//std::cout<<"cur_kfrm is: "<<cur_kfrm<<"\n";
 		cur_kfrm++;
 		cur_ifrm = 0;
-		glutTimerFunc(20,box_animate,cur_ifrm);
+		glutTimerFunc(10,box_animate,cur_ifrm);
 	}
 	else
 	{
@@ -981,14 +1011,14 @@ void keyboard( unsigned char key, int x, int y ) {
   case 27: 
     exit(0);
     break;
-  case '-':
-  	lfrm--;
-  	std::cout<<"lfrm is: "<<lfrm<<"\n";
-  	break;
-  case '+':
-  	lfrm++;
-  	std::cout<<"lfrm is: "<<lfrm<<"\n";
-  	break;	
+  // case '-':
+  // 	lfrm--;
+  // 	std::cout<<"lfrm is: "<<lfrm<<"\n";
+  // 	break;
+  // case '+':
+  // 	lfrm++;
+  // 	std::cout<<"lfrm is: "<<lfrm<<"\n";
+  // 	break;	
   case 'x':
   	saveframe();  
   	break;
@@ -1223,6 +1253,133 @@ void keyboard( unsigned char key, int x, int y ) {
   	}
   	std::cout<<"d2: x: "<<neck_x1<<" y: "<<neck_y1<<" z: "<<neck_z1<<"\n";
   	break;
+  case 'f':
+  	if(cur_axis ==1)
+  	{
+  			t1_x += 5;
+  	}
+  	else if(cur_axis ==2)
+  	{
+  			t1_y += 5;
+  	}
+  	else
+  	{
+  			t1_z += 5;
+  	}
+  	std::cout<<"d1t1: x: "<<t1_x<<" y: "<<t1_y<<" z: "<<t1_z<<"\n"; 
+  	break;
+  case 'g':
+  	if(cur_axis ==1)
+  	{
+  			t1_x -=5;
+  		
+  	}
+  	else if(cur_axis ==2)
+  	{
+  			t1_y -= 5;
+  		
+  	}
+  	else
+  	{
+
+  			t1_z -= 5;
+
+  	}
+  	std::cout<<"d1t1: x: "<<t1_x<<" y: "<<t1_y<<" z: "<<t1_z<<"\n";
+  	break;
+    case 'h':
+  	if(cur_axis ==1)
+  	{
+  			t1_x1 += 5;
+  	}
+  	else if(cur_axis ==2)
+  	{
+	t1_y1 += 5;
+ 
+  	}
+  	else
+  	{
+  		
+  			t1_z1 += 5;
+  	
+  	}
+  	std::cout<<"d2t1: x: "<<t1_x1<<" y: "<<t1_y1<<" z: "<<t1_z1<<"\n"; 
+  	break;
+  case 'j':
+  	if(cur_axis ==1)
+  	{
+  			t1_x1 -=5;
+  	}
+  	else if(cur_axis ==2)
+  	{
+  			t1_y1 -= 5;
+  	}
+  	else
+  	{
+  			t1_z1 -= 5;
+  	}
+  	std::cout<<"d2t1: x: "<<t1_x1<<" y: "<<t1_y1<<" z: "<<t1_z1<<"\n";
+  	break;
+   case 'k':
+  	if(cur_axis ==1)
+  	{
+  		hip_x_l += 5;
+  	}
+  	else if(cur_axis ==2)
+  	{
+		hip_x_l += 5;
+  	}
+  	else
+  	{
+  		hip_x_l += 5;
+  	}
+  	std::cout<<"d1hip_x_l: "<<hip_x_l<<"\n"; 
+  	break;
+  case 'l':
+  	if(cur_axis ==1)
+  	{
+  		hip_x_l -=5;
+  	}
+  	else if(cur_axis ==2)
+  	{
+  		hip_x_l -= 5;
+  	}
+  	else
+  	{
+  		hip_x_l -= 5;
+  	}
+  	std::cout<<"d1hip_x_l: "<<hip_x_l<<"\n";
+  	break;
+  case 'v':
+  	if(cur_axis ==1)
+  	{
+  		hip_x_r1 += 5;
+  	}
+  	else if(cur_axis ==2)
+  	{
+		hip_x_r1 += 5;
+  	}
+  	else
+  	{
+  		hip_x_r1 += 5;
+  	}
+  	std::cout<<"d2hip_x_r1: "<<hip_x_r1<<"\n"; 
+  	break;
+  case 'b':
+  	if(cur_axis ==1)
+  	{
+  		hip_x_r1 -=5;
+  	}
+  	else if(cur_axis ==2)
+  	{
+  		hip_x_r1 -= 5;
+  	}
+  	else
+  	{
+  		hip_x_r1 -= 5;
+  	}
+  	std::cout<<"d2hip_x_r1: "<<hip_x_r1<<"\n";
+  	break;				
   case 'M':
   	move_cam(-0.144,0.077,-0.058,-4.8,-0.1);
   	break;	
@@ -1230,7 +1387,7 @@ void keyboard( unsigned char key, int x, int y ) {
     break;
   }
   glutPostRedisplay();
-}
+	}
 
 void mouse(int button, int state, int x, int y) 
 {

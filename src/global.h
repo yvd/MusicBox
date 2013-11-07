@@ -17,7 +17,7 @@ int cur_axis = 1;
 int side = 1;
 int limb = 1;
 int torso = 1;
-int en_l1 = 1, en_l2 = 1, en_l3 = 1;
+int en_l1 = 1, en_l2 = 1, en_l3 = 0;
 //sf::SoundBuffer buffer;
 //buffer.loadFromFile("sounds/door.mp3");
 //sf::Sound door_snd;

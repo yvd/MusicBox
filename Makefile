@@ -23,5 +23,5 @@ $(PROJECT_DIR)/$(TARGET): $(SRC) $(TEXTURE_DIR)/*
 	
 clean:
 	@$(ECHO) -n "Cleaning..."
-	@$(RM) -rf $(TARGET) *~ $(IMG_DIR)/*.ppm $(IMG_DIR)/*.jpg
+	@$(RM) -rf $(TARGET) *~ $(IMG_DIR)/*.ppm $(IMG_DIR)/*.jpg $(SRC_DIR)/*~
 	@$(ECHO) "Done"
