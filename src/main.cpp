@@ -1013,8 +1013,12 @@ void keyboard( unsigned char key, int x, int y ) {
   	theta = -4.8;
   	phi = -0.1;
 	break;
-  //case 'C':
-
+  case 'C':
+  	if(record == 0)
+  		record = 1;
+  	else
+  		record = 0;
+  	break;
   case '3':
   	if(rotate_door < 135)
   		rotate_door += 5;
