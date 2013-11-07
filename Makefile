@@ -10,6 +10,7 @@ TARGET = room
 PROJECT_DIR=./
 TEXTURE_DIR=$(PROJECT_DIR)/textures 
 SRC_DIR=$(PROJECT_DIR)/src
+IMG_DIR=$(PROJECT_DIR)/images
 #Libraries
 LIBS = -lglut -lGLU -lGL #-lsfml-audio -lsfml-system
 
@@ -22,5 +23,5 @@ $(PROJECT_DIR)/$(TARGET): $(SRC) $(TEXTURE_DIR)/*
 	
 clean:
 	@$(ECHO) -n "Cleaning..."
-	@$(RM) -rf $(TARGET) *~
+	@$(RM) -rf $(TARGET) *~ $(IMG_DIR)/*.ppm $(IMG_DIR)/*.jpg
 	@$(ECHO) "Done"

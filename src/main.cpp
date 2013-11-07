@@ -25,7 +25,10 @@ int frm = 1;
 int lfrm = 1;
 int cur_kfrm = 1,cur_ifrm=1;
 int a_1,a_2;
-double a_3,a_4;
+int record = 0;
+double a_3,a_4,a_5,a_6;
+unsigned char *pRGB;
+unsigned int framenum=0;
 static void init()
 {
 	glShadeModel(GL_SMOOTH);
@@ -43,6 +46,31 @@ static void init()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	dancer();
 	glCallList(sun);
+}
+
+void capture_frame(unsigned int framenum)
+{
+  //global pointer float *pRGB
+  pRGB = new unsigned char [3 * (win_width+1) * (win_height + 1) ];
+
+
+  // set the framebuffer to read
+  //default for double buffered
+  glReadBuffer(GL_BACK);
+
+  glPixelStoref(GL_PACK_ALIGNMENT,1);//for word allignment
+  
+  glReadPixels(0, 0, win_width, win_height, GL_RGB, GL_UNSIGNED_BYTE, pRGB);
+  char filename[200];
+  sprintf(filename,"images/frame_%04d.ppm",framenum);
+  std::ofstream out(filename, std::ios::out);
+  out<<"P6"<<std::endl;
+  out<<win_width<<" "<<win_height<<" 255"<<std::endl;
+  out.write(reinterpret_cast<char const *>(pRGB), (3 * (win_width+1) * (win_height + 1)) * sizeof(int));
+  out.close();
+
+  //function to store pRGB in a file named count
+  delete pRGB;
 }
 
 void loadkeyframe(int n)
@@ -81,6 +109,8 @@ void loadkeyframe(int n)
 			a_3 = atof(parse[3].c_str());
 			//std::cout<<"rotate_lid\n";
 			a_4 = atof(parse[4].c_str());
+			a_5 = atof(parse[5].c_str());
+			a_6 = atof(parse[6].c_str());
 			//std::cout<<"rotate_flr\n";
 			break;
 		}
@@ -88,12 +118,14 @@ void loadkeyframe(int n)
 	input_file.close();
 }
 
-void loadframe(int a,int b,double c,double d)
+void loadframe(int a,int b,double c,double d,double e,double f)
 {
 	en_l1 = a;
 	en_l2 = b;
 	rotate_lid = c;
 	rotate_flr = d;
+	neck_x = e;
+	neck_x1 = f;
 }
 void saveframe() 
 {
@@ -103,8 +135,9 @@ void saveframe()
     f = "keyframes.txt";
     std::ofstream output_file;
     output_file.open(f.c_str(),std::fstream::app|std::fstream::out);
-    //WallLight LampLight boxlid rotate_flr
+    //WallLight LampLight boxlid rotate_flr neckpos1 neckpos2
     output_file<<frm<<" "<<en_l1<<" "<<en_l2<<" "<<rotate_lid<<" "<<rotate_flr;
+    output_file<<" "<<neck_x<<" "<<neck_x1;
     // output_file<<C.getr()<<" "<<C.getg()<<" "<<C.getb()<<" "<<ln.getsize()<<" "<<ln.getp1().getx()<<" "<<ln.getp1().gety()<<" "<<ln.getp2().getx()<<" "<<ln.getp2().gety()<<" \n";
     // output_file<<C.getr()<<" "<<C.getg()<<" "<<C.getb();
     frm++; 
@@ -112,6 +145,14 @@ void saveframe()
 	output_file.close();
  }
 
+void move_cam(double a,double b,double c,double d,double e)
+{
+	ex = a;
+	ey = b;
+	ez = c;
+	theta = d;
+	phi = e;
+}
 void animate(int value)
 {	
 	double t = value/100.0;
@@ -136,29 +177,33 @@ void box_animate(int k)
 	{
 		
 		int c1,c2;
-		double c3,c4;
+		double c3,c4,c5,c6;
 		loadkeyframe(cur_kfrm + 1);
 		c1 = a_1;
 		c2 = a_2;
 		c3 = a_3;
 		c4 = a_4;
+		c5 = a_5;
+		c6 = a_6;
 		loadkeyframe(cur_kfrm);
 		//c1 = (c1 - a_1)/30;
 		//c2 = (c2 - a_2)/30;
 		c3 = (c3 - a_3)/30;
 		c4 = (c4 - a_4)/30;
-		loadframe(a_1,a_2,a_3 + cur_ifrm*c3,a_4 + cur_ifrm*c4);
+		c5 = (c5 - a_5)/30;
+		c6 = (c6 - a_6)/30;
+		loadframe(a_1,a_2,a_3 + cur_ifrm*c3,a_4 + cur_ifrm*c4,a_5 + cur_ifrm*c5,a_6 + cur_ifrm*c6);
 		glutPostRedisplay();
 		cur_ifrm++;
-		glutTimerFunc(60,box_animate,cur_ifrm);
-		std::cout<<"cur_kfrm is: "<<cur_kfrm<<" and k is: "<<cur_ifrm<<" \n";
+		glutTimerFunc(20,box_animate,cur_ifrm);
+		//std::cout<<"cur_kfrm is: "<<cur_kfrm<<" and k is: "<<cur_ifrm<<" \n";
 	}
-	else if(cur_kfrm < 10)
+	else if(cur_kfrm < 16)
 	{
 		//std::cout<<"cur_kfrm is: "<<cur_kfrm<<"\n";
 		cur_kfrm++;
 		cur_ifrm = 0;
-		glutTimerFunc(60,box_animate,cur_ifrm);
+		glutTimerFunc(20,box_animate,cur_ifrm);
 	}
 	else
 	{
@@ -911,6 +956,10 @@ void display( void )
 	glPopMatrix();		
 //////////////////////////////////////////////////////////////	
 	glFlush();
+	if(record)
+	{
+		capture_frame(framenum++);
+	}
 	glutSwapBuffers();
 }
 
@@ -959,6 +1008,13 @@ void keyboard( unsigned char key, int x, int y ) {
   	else
   		flag_draw = 0;
   	break;
+  case 'A':
+  	b.addCP(-0.144,0.077,-0.058);
+  	theta = -4.8;
+  	phi = -0.1;
+	break;
+  //case 'C':
+
   case '3':
   	if(rotate_door < 135)
   		rotate_door += 5;
@@ -1070,37 +1126,38 @@ void keyboard( unsigned char key, int x, int y ) {
   case 't':
   	if(cur_axis ==1)
   	{
-  		if(neck_x < 20)
+  		if(neck_x < 40)
   		{
   			neck_x += 5;
   		}
   	}
   	else if(cur_axis ==2)
   	{
-  		if(neck_y < 90)
+  		if(neck_y < 110)
   		{
   			neck_y += 5;
   		}
   	}
   	else
   	{
-  		if(neck_z < 20)
+  		if(neck_z < 40)
   		{
   			neck_z += 5;
   		}
   	}
+  	std::cout<<"d1: x: "<<neck_x<<" y: "<<neck_y<<" z: "<<neck_z<<"\n"; 
   	break;
   case 'y':
   	if(cur_axis ==1)
   	{
-  		if(neck_x > -20)
+  		if(neck_x > -40)
   		{
   			neck_x -=5;
   		}
   	}
   	else if(cur_axis ==2)
   	{
-  		if(neck_y > -90)
+  		if(neck_y > -100)
   		{
   			neck_y -= 5;
   		}
@@ -1112,54 +1169,59 @@ void keyboard( unsigned char key, int x, int y ) {
   			neck_z -= 5;
   		}
   	}
+  	std::cout<<"d1: x: "<<neck_x<<" y: "<<neck_y<<" z: "<<neck_z<<"\n";
   	break;  	
   case 'u':
   	if(cur_axis ==1)
   	{
-  		if(neck_x1 < 20)
+  		if(neck_x1 < 40)
   		{
   			neck_x1 += 5;
   		}
   	}
   	else if(cur_axis ==2)
   	{
-  		if(neck_y1 < 90)
+  		if(neck_y1 < 110)
   		{
   			neck_y1 += 5;
   		}
   	}
   	else
   	{
-  		if(neck_z1 < 20)
+  		if(neck_z1 < 40)
   		{
   			neck_z1 += 5;
   		}
   	}
+  	std::cout<<"d2: x: "<<neck_x1<<" y: "<<neck_y1<<" z: "<<neck_z1<<"\n";
   	break;
   case 'i':
   	if(cur_axis ==1)
   	{
-  		if(neck_x1 > -20)
+  		if(neck_x1 > -40)
   		{
   			neck_x1 -=5;
   		}
   	}
   	else if(cur_axis ==2)
   	{
-  		if(neck_y1 > -90)
+  		if(neck_y1 > -100)
   		{
   			neck_y1 -= 5;
   		}
   	}
   	else
   	{
-  		if(neck_z1 > -20)
+  		if(neck_z1 > -40)
   		{
   			neck_z1 -= 5;
   		}
   	}
+  	std::cout<<"d2: x: "<<neck_x1<<" y: "<<neck_y1<<" z: "<<neck_z1<<"\n";
   	break;
-  	
+  case 'M':
+  	move_cam(-0.144,0.077,-0.058,-4.8,-0.1);
+  	break;	
   default:
     break;
   }
